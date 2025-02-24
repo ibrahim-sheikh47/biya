@@ -1,0 +1,28 @@
+// NAVIGATION
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SplashScreen from "../../screens/Splash";
+import OnboardingScreen from "../../screens/Onboarding";
+import AuthScreen from "../../screens/Auth/auth";
+import VerificationScreen from "../../screens/Auth/verification";
+import AddPhoneScreen from "../../screens/Auth/phone";
+import ConsentScreen from "../../screens/Consent";
+
+const Stack = createNativeStackNavigator();
+
+export default function AppNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        animation: "slide_from_right",
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+      <Stack.Screen name="Auth" component={AuthScreen} />
+      <Stack.Screen name="Verification" component={VerificationScreen} />
+      <Stack.Screen name="AddPhoneScreen" component={AddPhoneScreen} />
+      <Stack.Screen name="Consent" component={ConsentScreen} />
+    </Stack.Navigator>
+  );
+}
