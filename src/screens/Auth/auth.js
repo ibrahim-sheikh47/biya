@@ -70,7 +70,12 @@ const AuthScreen = () => {
               <Text style={styles.orText}>or</Text>
 
               {/* Google Sign-in Button */}
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  navigation.navigate("CreateProfile");
+                }}
+              >
                 <GoogleLogo />
                 <Text style={styles.text}>Sign in with Google</Text>
               </TouchableOpacity>

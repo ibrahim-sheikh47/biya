@@ -14,6 +14,9 @@ import Button from "../../components/Button/Button";
 import images from "../../constants/images";
 import colors from "../../constants/colors";
 import CustomModalize from "../../components/Modalize";
+import { CongratsIcon } from "../../../assets/svgs/CongratsIcon";
+import { UkIcon } from "../../../assets/svgs/UkIcon";
+import { BritishIcon } from "../../../assets/svgs/BritishIcon";
 
 const ConsentScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -30,12 +33,12 @@ const ConsentScreen = () => {
     {
       id: 1,
       label: "I am a Muslim Bengali British Citizen",
-      image: images.obImg,
+      image: <BritishIcon />,
     },
     {
       id: 2,
       label: "I am a Muslim Bengali living in the UK",
-      image: images.obImg,
+      image: <UkIcon />,
     },
   ];
 
@@ -79,11 +82,12 @@ const ConsentScreen = () => {
           styles.button,
           selectedOption ? styles.buttonActive : styles.buttonDisabled,
         ]}
+        onPress={() => navigation.navigate("AccountType")}
       />
       <CustomModalize
         height={330}
         ref={modalRef}
-        icon={images.obImg}
+        icon={<CongratsIcon />}
         title="Congratulations!"
         subtitle="Your Biya account has been created. You are one step closer to finding your perfect soulmate."
       >
@@ -92,7 +96,6 @@ const ConsentScreen = () => {
     </Container>
   );
 };
-
 export default ConsentScreen;
 
 const styles = StyleSheet.create({
@@ -129,6 +132,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#FFEDF5",
     marginRight: 15,
   },

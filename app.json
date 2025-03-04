@@ -23,6 +23,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9ed37c6a-8ce5-4404-be97-0c92f2316043"
+      }
+    },
+    "owner": "biyaapp",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/9ed37c6a-8ce5-4404-be97-0c92f2316043"
     }
   }
 }

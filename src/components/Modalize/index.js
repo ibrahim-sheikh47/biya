@@ -7,7 +7,7 @@ const CustomModalize = React.forwardRef(
     return (
       <Modalize ref={ref} modalHeight={height}>
         <View style={styles.container}>
-          {icon && <Image source={icon} style={styles.icon} />}
+          {icon}
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
           <View style={styles.content}>{children}</View>
@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Poppins-Medium",
     textAlign: "center",
-    marginBottom: 15,
+    marginVertical: 15,
   },
   subtitle: {
     fontSize: 16,
     textAlign: "center",
     fontFamily: "Poppins-Regular",
-    color: "gray",
+    color: "#848484",
     marginBottom: 15,
   },
   content: {
