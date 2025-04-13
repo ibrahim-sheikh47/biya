@@ -46,7 +46,7 @@ const AuthScreen = () => {
               {/* Input Field */}
               <InputField
                 label="Enter Email ID"
-                placeholder="Eg: sourav@gmail.com"
+                placeholder="Eg: Ibrahim@gmail.com"
                 value={email}
                 onChangeText={setEmail}
                 outlineColor="#C7C7C7"
@@ -73,7 +73,7 @@ const AuthScreen = () => {
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  navigation.navigate("CreateProfile");
+                  navigation.navigate("AccountType");
                 }}
               >
                 <GoogleLogo />

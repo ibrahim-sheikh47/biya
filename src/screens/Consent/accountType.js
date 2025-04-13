@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ScrollView,
   StyleSheet,
@@ -5,11 +7,11 @@ import {
   TouchableOpacity,
   View,
   Modal,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import Container from "../../components/Container";
 import { RadioButton, TextInput } from "react-native-paper";
-import images from "../../constants/images";
 import colors from "../../constants/colors";
 import Button from "../../components/Button/Button";
 import { useNavigation } from "@react-navigation/native";
@@ -18,27 +20,63 @@ import { BrideIcon } from "../../../assets/svgs/BrideIcon";
 import { GroomIcon } from "../../../assets/svgs/GroomIcon";
 import { GuardianIcon } from "../../../assets/svgs/GuardianIcon";
 import { ConsultantIcon } from "../../../assets/svgs/ConsultantIcon";
+import { useUser } from "../../context/UserContext";
 
 const AccountTypeScreen = () => {
   const navigation = useNavigation();
+  const { setAccountType } = useUser();
   const [selectedOption, setSelectedOption] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [relationship, setRelationship] = useState("");
 
   const options = [
-    { id: 1, label: "Bride", image: <BrideIcon /> },
-    { id: 2, label: "Groom", image: <GroomIcon /> },
-    { id: 3, label: "Guardian", image: <GuardianIcon /> },
-    { id: 4, label: "Marriage Consultant", image: <ConsultantIcon /> },
+    { id: 1, label: "Bride", value: "bride", image: <BrideIcon /> },
+    { id: 2, label: "Groom", value: "groom", image: <GroomIcon /> },
+    { id: 3, label: "Guardian", value: "guardian", image: <GuardianIcon /> },
+    {
+      id: 4,
+      label: "Marriage Consultant",
+      value: "consultant",
+      image: <ConsultantIcon />,
+    },
   ];
 
   const relationshipOptions = [
     "Father / Mother",
     "Grand parent",
-    "Faster Parent",
+    "Foster Parent",
     "Brother / Sister / Cousin",
     "Uncle / Aunt",
   ];
+
+  const handleContinue = () => {
+    const selectedType = options.find((option) => option.id === selectedOption);
+
+    if (selectedType) {
+      // Save the account type to context
+      setAccountType(
+        selectedType.value,
+        selectedType.value === "guardian" ? relationship : ""
+      );
+
+      // For debugging
+      console.log("Setting account type:", selectedType.value);
+
+      // Show alert for guardian/consultant to confirm the dropdown will appear
+      if (
+        selectedType.value === "guardian" ||
+        selectedType.value === "consultant"
+      ) {
+        Alert.alert(
+          "Account Type Set",
+          `You've selected ${selectedType.label}. You'll now be able to manage multiple profiles.`,
+          [{ text: "OK", onPress: () => navigation.navigate("CreateProfile") }]
+        );
+      } else {
+        navigation.navigate("CreateProfile");
+      }
+    }
+  };
 
   return (
     <Container>
@@ -92,12 +130,14 @@ const AccountTypeScreen = () => {
 
       <Button
         title="Continue"
-        disabled={!selectedOption}
+        disabled={!selectedOption || (selectedOption === 3 && !relationship)}
         style={[
           styles.button,
-          selectedOption ? styles.buttonActive : styles.buttonDisabled,
+          selectedOption && (selectedOption !== 3 || relationship)
+            ? styles.buttonActive
+            : styles.buttonDisabled,
         ]}
-        onPress={() => navigation.navigate("CreateProfile")}
+        onPress={handleContinue}
       />
 
       {/* Modal for Selecting Relationship */}

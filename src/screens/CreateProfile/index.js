@@ -1,17 +1,30 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState, useEffect } from "react";
+"use client";
+
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useState, useEffect } from "react";
 import Container from "../../components/Container";
 import images from "../../constants/images";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import profileSections from "../../data/profileSections";
-import { Ionicons } from "@expo/vector-icons"; // Import icons
+import { Ionicons } from "@expo/vector-icons";
+import Button from "../../components/Button/Button";
+import { useUser } from "../../context/UserContext"; // Import the user context
 
 const CreateProfile = ({ route }) => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const { user, addProfile } = useUser(); // Get user data and addProfile function
 
   // State to track completion percentage of each section
   const [progress, setProgress] = useState({});
+  const [profileName, setProfileName] = useState("");
 
   // Update progress when returning from ProfileForm
   useEffect(() => {
@@ -20,6 +33,11 @@ const CreateProfile = ({ route }) => {
         ...prev,
         [route.params.sectionId]: route.params.completionPercentage,
       }));
+
+      // If the name section is completed, update the profile name
+      if (route.params.sectionId === "basic" && route.params.data?.name) {
+        setProfileName(route.params.data.name);
+      }
     }
   }, [route.params]);
 
@@ -60,28 +78,49 @@ const CreateProfile = ({ route }) => {
     );
   };
 
+  const handleContinue = () => {
+    // For guardian or consultant, add the profile
+    if (
+      (user.accountType === "guardian" || user.accountType === "consultant") &&
+      profileName
+    ) {
+      addProfile({ name: profileName });
+    }
+
+    navigation.navigate("Main");
+  };
+
+  // Get the appropriate title based on account type
+
   return (
     <Container>
-      <View style={styles.content}>
-        <View>
-          <Text style={styles.title}>Create profile</Text>
-          <Text style={styles.subText}>
-            Fill in bride/groom's details for a best possible match
-          </Text>
+      <ScrollView style={{ flex: 1 }}>
+        <View style={styles.content}>
+          <View>
+            <Text style={styles.title}>Create Profile</Text>
+            <Text style={styles.subText}>
+              Fill in bride/groom's details for a best possible match
+            </Text>
+          </View>
+          <Image source={images.profileBg} style={{ width: 94, height: 81 }} />
         </View>
-        <Image source={images.profileBg} style={{ width: 94, height: 81 }} />
-      </View>
-      <View style={styles.cardsContainer}>
-        {profileSections.map((section) => (
-          <ProfileCard
-            key={section.id}
-            title={section.title}
-            subtitle={section.subtitle}
-            icon={section.icon}
-            section={section}
-          />
-        ))}
-      </View>
+        <View style={styles.cardsContainer}>
+          {profileSections.map((section) => (
+            <ProfileCard
+              key={section.id}
+              title={section.title}
+              subtitle={section.subtitle}
+              icon={section.icon}
+              section={section}
+            />
+          ))}
+        </View>
+      </ScrollView>
+      <Button
+        title={"Continue"}
+        style={{ width: "90%", marginHorizontal: "auto", marginBottom: 20 }}
+        onPress={handleContinue}
+      />
     </Container>
   );
 };

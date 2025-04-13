@@ -3,16 +3,19 @@ import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
-const Header = ({ title }) => {
+const Header = ({ title, style }) => {
   const navigation = useNavigation();
   return (
     <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 20,
-        marginTop: 15,
-      }}
+      style={[
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 20,
+          marginTop: 15,
+        },
+        style,
+      ]}
     >
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="chevron-back" size={24} />

@@ -25,9 +25,10 @@ const OnboardingScreen = () => {
       <View style={styles.contentContainer}>
         <Image source={images.bismillahImg} style={styles.bismillahImage} />
 
+        <Text style={styles.mainText}>A Marriage App for</Text>
+        <Text style={styles.mainText}>Bengali Muslims Living in UK</Text>
         <Text style={styles.mainText}>
-          A Marriage App for Bengali Muslims Living in UK Bengali Muslim British
-          Citizens of UK
+          Bengali Muslim British Citizens of UK
         </Text>
 
         <Text style={styles.subText}>
@@ -90,23 +91,24 @@ const styles = StyleSheet.create({
   bismillahImage: {
     width: 200,
     height: 61,
+
+    marginBottom: 40,
   },
   mainText: {
     fontSize: 18,
     fontFamily: "Poppins-Medium",
     textAlign: "center",
-    marginTop: 40,
   },
   subText: {
     fontSize: 14,
     fontFamily: "Poppins-Regular",
     textAlign: "center",
     marginTop: 40,
-    marginHorizontal: 50,
+    marginHorizontal: 40,
     color: "#8E8E8E",
   },
   button: {
-    marginBottom: 40,
+    marginBottom: 30,
     width: "90%",
     alignSelf: "center",
   },

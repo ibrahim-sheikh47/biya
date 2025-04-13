@@ -7,7 +7,12 @@ const CustomModalize = React.forwardRef(
     return (
       <Modalize ref={ref} modalHeight={height}>
         <View style={styles.container}>
-          {icon}
+          {typeof icon === "string" || typeof icon === "number" ? (
+            <Image source={icon} style={styles.icon} />
+          ) : (
+            icon
+          )}
+
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
           <View style={styles.content}>{children}</View>
